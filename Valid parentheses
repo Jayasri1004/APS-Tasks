@@ -2,19 +2,24 @@ class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char ch : s.toCharArray()) {
+            // If it's an opening bracket, push to stack
             if (ch == '(' || ch == '{' || ch == '[') {
                 stack.push(ch);
-            }
+            } 
             else {
+                // If we see a closing bracket but stack is empty, it's invalid
                 if (stack.isEmpty()) return false;
+                
                 char top = stack.pop();
-                if((ch == ')' && top != '(') ||
-                (ch == '{' && top != '{') || 
-                (ch == ']' && top != '[')) {
+                // Match the closing bracket with the popped opening bracket
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') || // Fixed: was '{'
+                    (ch == ']' && top != '[')) {
                     return false;
                 }
             }
         }
+        // If stack is empty, all brackets were matched correctly
         return stack.isEmpty();
     }
 }
